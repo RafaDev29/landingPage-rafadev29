@@ -1,3 +1,10 @@
+import Header from "./components/Header";
+import HeroSection from "./components/HeroSection";
+import ScrollReveal from "./components/ScrollReveal";
+
+/* ─────────────────────────────────────────────
+   Cat logo — SVG inline, purple cat face
+───────────────────────────────────────────── */
 function CatLogo({ size = 120, className = "" }: { size?: number; className?: string }) {
   return (
     <svg
@@ -7,6 +14,7 @@ function CatLogo({ size = 120, className = "" }: { size?: number; className?: st
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      aria-label="rafadev29 logo"
     >
       {/* Ears */}
       <polygon points="20,56 14,4 48,44" fill="#6d28d9" />
@@ -26,21 +34,50 @@ function CatLogo({ size = 120, className = "" }: { size?: number; className?: st
       <ellipse cx="79" cy="67" rx="4.5" ry="6" fill="#2a0060" />
       {/* Nose */}
       <path d="M 55 78 L 60 73 L 65 78 Z" fill="#e879f9" />
-      {/* Philtrum */}
       <line x1="60" y1="78" x2="60" y2="82" stroke="#e879f9" strokeWidth="1.6" />
       {/* Mouth */}
       <path d="M 56 82 Q 51 88 46 85" stroke="#e879f9" strokeWidth="2" fill="none" strokeLinecap="round" />
       <path d="M 64 82 Q 69 88 74 85" stroke="#e879f9" strokeWidth="2" fill="none" strokeLinecap="round" />
-      {/* Whiskers left */}
-      <line x1="2" y1="73" x2="47" y2="76" stroke="#c084fc" strokeWidth="1.4" strokeLinecap="round" opacity="0.75" />
-      <line x1="2" y1="83" x2="47" y2="80" stroke="#c084fc" strokeWidth="1.4" strokeLinecap="round" opacity="0.75" />
-      {/* Whiskers right */}
-      <line x1="118" y1="73" x2="73" y2="76" stroke="#c084fc" strokeWidth="1.4" strokeLinecap="round" opacity="0.75" />
-      <line x1="118" y1="83" x2="73" y2="80" stroke="#c084fc" strokeWidth="1.4" strokeLinecap="round" opacity="0.75" />
+      {/* Whiskers */}
+      <line x1="2" y1="73" x2="47" y2="76" stroke="#c084fc" strokeWidth="1.4" strokeLinecap="round" opacity="0.7" />
+      <line x1="2" y1="83" x2="47" y2="80" stroke="#c084fc" strokeWidth="1.4" strokeLinecap="round" opacity="0.7" />
+      <line x1="118" y1="73" x2="73" y2="76" stroke="#c084fc" strokeWidth="1.4" strokeLinecap="round" opacity="0.7" />
+      <line x1="118" y1="83" x2="73" y2="80" stroke="#c084fc" strokeWidth="1.4" strokeLinecap="round" opacity="0.7" />
     </svg>
   );
 }
 
+/* ─────────────────────────────────────────────
+   Cat ear divider — two subtle triangles + label
+   Replaces the plain horizontal rule
+───────────────────────────────────────────── */
+function CatDivider({ label }: { label: string }) {
+  return (
+    <div className="flex flex-col items-center gap-3 mb-14">
+      {/* Cat ears — two small triangles, very low opacity */}
+      <div className="flex items-end gap-2 opacity-30">
+        <svg width="11" height="10" viewBox="0 0 11 10" fill="none">
+          <polygon points="0,10 5.5,0 11,10" fill="#a855f7" />
+        </svg>
+        <svg width="11" height="10" viewBox="0 0 11 10" fill="none">
+          <polygon points="0,10 5.5,0 11,10" fill="#a855f7" />
+        </svg>
+      </div>
+      {/* Label row */}
+      <div className="flex items-center gap-5">
+        <div className="h-px w-14 bg-purple-800/35" />
+        <span className="text-purple-500/55 text-[11px] font-mono tracking-[0.28em] uppercase">
+          {label}
+        </span>
+        <div className="h-px w-14 bg-purple-800/35" />
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   Tech stack data
+───────────────────────────────────────────── */
 type TechItem = {
   name: string;
   color: string;
@@ -51,14 +88,11 @@ type TechItem = {
   featured?: boolean;
 };
 
-type TechGroup = {
-  category: string;
-  items: TechItem[];
-};
+type TechGroup = { category: string; items: TechItem[] };
 
 const techStack: TechGroup[] = [
   {
-    category: "Mi Pasión ❤️",
+    category: "Mi Pasión",
     items: [
       {
         name: "NestJS",
@@ -99,142 +133,81 @@ const techStack: TechGroup[] = [
   },
 ];
 
-function Divider({ label }: { label: string }) {
-  return (
-    <div className="flex items-center gap-4 mb-12">
-      <div className="h-px flex-1 bg-purple-800/30" />
-      <span className="text-purple-400/80 text-xs font-mono tracking-widest uppercase">{label}</span>
-      <div className="h-px flex-1 bg-purple-800/30" />
-    </div>
-  );
-}
-
+/* ─────────────────────────────────────────────
+   Page
+───────────────────────────────────────────── */
 export default function Home() {
   return (
     <div className="min-h-screen" style={{ background: "#070711" }}>
-      {/* ── NAV ── */}
-      <nav
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 border-b border-purple-800/20"
-        style={{ background: "rgba(7,7,17,0.85)", backdropFilter: "blur(12px)" }}
-      >
-        <div className="flex items-center gap-2.5">
-          <CatLogo size={34} />
-          <span className="font-bold text-purple-200 tracking-wide">rafadev29</span>
-        </div>
-        <div className="hidden md:flex items-center gap-8 text-sm text-purple-400">
-          <a href="#about" className="hover:text-purple-200 transition-colors">Sobre mí</a>
-          <a href="#stack" className="hover:text-purple-200 transition-colors">Stack</a>
-          <a href="#contact" className="hover:text-purple-200 transition-colors">Contacto</a>
-        </div>
-      </nav>
 
-      {/* ── HERO ── */}
-      <section
-        id="hero"
-        className="relative min-h-screen flex flex-col items-center justify-center px-6 text-center overflow-hidden pt-16"
-      >
-        {/* Radial glow behind cat */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 70% 55% at 50% 42%, rgba(109,40,217,0.22) 0%, transparent 70%)",
-          }}
-        />
+      <Header />
 
-        <div className="relative z-10 flex flex-col items-center gap-8">
-          <CatLogo size={200} className="cat-float" />
-
-          <div className="flex flex-col items-center gap-4 fade-in-up fade-delay-1">
-            <h1
-              className="text-6xl md:text-8xl font-black tracking-tight"
-              style={{
-                background: "linear-gradient(to bottom, #f3e8ff 0%, #a855f7 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              rafadev29
-            </h1>
-            <p className="text-xl md:text-2xl text-purple-300 font-light tracking-widest uppercase">
-              Backend Engineer
-            </p>
-            <p className="text-sm text-purple-400/70 tracking-wider font-mono">
-              NestJS · Node.js · TypeScript · AWS
-            </p>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-4 fade-in-up fade-delay-2">
-            <a
-              href="#stack"
-              className="px-7 py-3 rounded-full text-sm font-semibold text-white bg-purple-700 hover:bg-purple-800 transition-all"
-            >
-              Ver mi stack
-            </a>
-            <a
-              href="#contact"
-              className="px-7 py-3 rounded-full text-sm font-semibold text-purple-300 border border-purple-600/50 hover:border-purple-400 hover:text-purple-100 transition-all"
-            >
-              Contáctame
-            </a>
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-10 flex flex-col items-center gap-2 text-purple-500/50 text-xs font-mono">
-          <span>scroll</span>
-          <div className="w-px h-8 bg-gradient-to-b from-purple-500/50 to-transparent" />
-        </div>
-      </section>
+      <HeroSection />
 
       {/* ── ABOUT ── */}
       <section id="about" className="py-28 px-6">
         <div className="max-w-4xl mx-auto">
-          <Divider label="Sobre mí" />
+          <ScrollReveal>
+            <CatDivider label="Sobre mí" />
+          </ScrollReveal>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Bio */}
-            <div className="flex flex-col gap-5 text-purple-200/75 leading-relaxed text-[15px]">
-              <p className="text-base">
-                Soy <span className="text-purple-200 font-semibold">Rafael</span>, también conocido como{" "}
-                <span className="text-purple-300 font-semibold">rafadev29</span> o{" "}
-                <span className="text-purple-300 font-semibold">de29</span>.
-              </p>
-              <p>
-                Me especializo en desarrollo backend con{" "}
-                <span className="text-purple-300">NestJS, Node.js, TypeScript</span> y servicios cloud en{" "}
-                <span className="text-purple-300">AWS</span>, construyendo APIs robustas y
-                arquitecturas escalables.
-              </p>
-              <p>
-                También tengo buena base en frontend con{" "}
-                <span className="text-purple-300">Vue 3</span> y{" "}
-                <span className="text-purple-300">Next.js</span>, y manejo tanto bases de datos
-                relacionales (SQL Server, MySQL, PostgreSQL) como NoSQL (MongoDB).
-              </p>
-            </div>
-
-            {/* NestJS card */}
-            <div
-              className="relative p-7 rounded-2xl border"
-              style={{
-                background: "rgba(109,28,217,0.08)",
-                borderColor: "rgba(109,40,217,0.35)",
-              }}
-            >
-              <div className="absolute -top-4 -right-4">
-                <CatLogo size={52} />
+            <ScrollReveal delay={0.05}>
+              <div className="flex flex-col gap-5 text-purple-200/70 leading-relaxed text-[15px]">
+                <p className="text-[16px]">
+                  Soy{" "}
+                  <span className="text-purple-200 font-semibold">Rafael</span>, también conocido como{" "}
+                  <span className="text-purple-300 font-semibold">rafadev29</span> o{" "}
+                  <span className="text-purple-300 font-semibold">de29</span>.
+                </p>
+                <p>
+                  Me especializo en desarrollo backend con{" "}
+                  <span className="text-purple-300">NestJS, Node.js y TypeScript</span>, y en
+                  servicios cloud en <span className="text-purple-300">AWS</span>, construyendo
+                  APIs robustas y arquitecturas escalables.
+                </p>
+                <p>
+                  También tengo buena base en frontend con{" "}
+                  <span className="text-purple-300">Vue 3</span> y{" "}
+                  <span className="text-purple-300">Next.js</span>, y manejo bases de datos
+                  relacionales (SQL Server, MySQL, PostgreSQL) y NoSQL (MongoDB).
+                </p>
               </div>
-              <div className="text-4xl text-purple-600/50 leading-none mb-4 font-serif">"</div>
-              <p className="text-purple-100/85 text-sm leading-7 mb-5">
-                NestJS no es solo mi framework favorito — es el que cambió el rumbo de mi
-                carrera. Su estructura, su elegancia TypeScript-first y la forma en que organiza
-                el pensamiento backend lo convirtieron en algo más que una herramienta.{" "}
-                <span className="text-purple-300 font-medium">Es parte de mi historia.</span>
-              </p>
-              <span className="text-purple-400/60 text-xs font-mono">— rafadev29</span>
-            </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.12}>
+              <div
+                className="relative p-7 rounded-2xl border"
+                style={{
+                  background: "rgba(109,28,217,0.07)",
+                  borderColor: "rgba(109,40,217,0.28)",
+                }}
+              >
+                {/* Cat ear accent — top-right corner */}
+                <div className="absolute -top-3 right-6 flex items-end gap-1.5 opacity-35">
+                  <svg width="10" height="9" viewBox="0 0 10 9" fill="none">
+                    <polygon points="0,9 5,0 10,9" fill="#a855f7" />
+                  </svg>
+                  <svg width="10" height="9" viewBox="0 0 10 9" fill="none">
+                    <polygon points="0,9 5,0 10,9" fill="#a855f7" />
+                  </svg>
+                </div>
+
+                <div className="text-3xl text-purple-700/50 leading-none mb-4 font-serif select-none">
+                  "
+                </div>
+                <p className="text-purple-100/80 text-[14px] leading-[1.85] mb-5">
+                  NestJS no es solo mi framework favorito — es el que cambió el rumbo de mi
+                  carrera. Su estructura, su elegancia TypeScript-first y la forma en que
+                  organiza el pensamiento backend lo convirtieron en algo más que una
+                  herramienta.{" "}
+                  <span className="text-purple-300 font-medium">
+                    Es parte de mi historia.
+                  </span>
+                </p>
+                <span className="text-purple-500/50 text-[12px] font-mono">— rafadev29</span>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -242,38 +215,41 @@ export default function Home() {
       {/* ── STACK ── */}
       <section id="stack" className="py-28 px-6">
         <div className="max-w-5xl mx-auto">
-          <Divider label="Stack" />
+          <ScrollReveal>
+            <CatDivider label="Stack" />
+          </ScrollReveal>
 
           <div className="flex flex-col gap-10">
-            {techStack.map((group) => (
-              <div key={group.category}>
-                <h3 className="text-purple-400/60 text-xs font-mono tracking-widest uppercase mb-4">
-                  {group.category}
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {group.items.map((tech) => (
-                    <div
-                      key={tech.name}
-                      className={`relative flex flex-col gap-2.5 p-5 rounded-xl border transition-all hover:-translate-y-1 hover:shadow-lg ${tech.bg} ${tech.border} ${tech.featured ? "sm:col-span-2 lg:col-span-2" : ""}`}
-                      style={tech.featured ? { boxShadow: "0 0 0 0 transparent" } : {}}
-                    >
-                      {tech.badge && (
-                        <span className="absolute top-4 right-4 text-xs bg-red-500/20 text-red-400 border border-red-500/30 px-2.5 py-0.5 rounded-full font-mono">
-                          {tech.badge} ❤️
+            {techStack.map((group, gi) => (
+              <ScrollReveal key={group.category} delay={gi * 0.06}>
+                <div>
+                  <h3 className="text-purple-500/50 text-[11px] font-mono tracking-[0.25em] uppercase mb-4">
+                    {group.category}
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {group.items.map((tech) => (
+                      <div
+                        key={tech.name}
+                        className={`relative flex flex-col gap-2.5 p-5 rounded-xl border transition-all duration-300 hover:-translate-y-1 ${tech.bg} ${tech.border} ${tech.featured ? "sm:col-span-2 lg:col-span-2" : ""}`}
+                      >
+                        {tech.badge && (
+                          <span className="absolute top-4 right-4 text-[11px] bg-red-500/15 text-red-400/80 border border-red-500/25 px-2.5 py-0.5 rounded-full font-mono">
+                            ❤ {tech.badge}
+                          </span>
+                        )}
+                        <span className="text-[17px] font-bold" style={{ color: tech.color }}>
+                          {tech.name}
                         </span>
-                      )}
-                      <span className="text-lg font-bold" style={{ color: tech.color }}>
-                        {tech.name}
-                      </span>
-                      {tech.description && (
-                        <p className="text-xs text-purple-300/55 leading-relaxed pr-8">
-                          {tech.description}
-                        </p>
-                      )}
-                    </div>
-                  ))}
+                        {tech.description && (
+                          <p className="text-[12px] text-purple-300/50 leading-relaxed pr-16">
+                            {tech.description}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -282,21 +258,34 @@ export default function Home() {
       {/* ── CONTACT ── */}
       <section id="contact" className="py-28 px-6">
         <div className="max-w-lg mx-auto text-center">
-          <Divider label="Contacto" />
+          <ScrollReveal>
+            <CatDivider label="Contacto" />
+          </ScrollReveal>
 
-          <div className="flex flex-col items-center gap-7">
-            <CatLogo size={72} className="opacity-70" />
+          <ScrollReveal delay={0.08} className="flex flex-col items-center gap-7">
+            {/* Yarn ball — tiny decorative element, contact section only */}
+            <svg width="42" height="42" viewBox="0 0 42 42" fill="none" className="opacity-30">
+              <circle cx="21" cy="21" r="18" stroke="#7c3aed" strokeWidth="1.5" />
+              <path d="M 21 3 Q 14 12 21 21 Q 28 30 21 39" stroke="#7c3aed" strokeWidth="1" fill="none" />
+              <path d="M 3 21 Q 12 14 21 21 Q 30 28 39 21" stroke="#7c3aed" strokeWidth="1" fill="none" />
+              <path d="M 7 8 Q 15 16 12 24 Q 9 32 14 37" stroke="#7c3aed" strokeWidth="0.8" fill="none" opacity="0.7" />
+              <path d="M 35 8 Q 27 16 30 24 Q 33 32 28 37" stroke="#7c3aed" strokeWidth="0.8" fill="none" opacity="0.7" />
+            </svg>
+
             <div>
-              <h2 className="text-3xl font-bold text-purple-100 mb-3">¿Hablamos?</h2>
-              <p className="text-purple-300/60 text-sm leading-relaxed">
+              <h2 className="text-3xl font-bold text-purple-100 mb-3 tracking-tight">
+                ¿Hablamos?
+              </h2>
+              <p className="text-purple-300/50 text-[14px] leading-relaxed">
                 Siempre abierto a nuevas oportunidades, proyectos interesantes o simplemente
-                charlar sobre NestJS y gatos.
+                una buena conversación sobre arquitectura backend.
               </p>
             </div>
-            <div className="flex flex-wrap justify-center gap-4">
+
+            <div className="flex flex-wrap justify-center gap-3">
               <a
                 href="mailto:rosselgalarzarafael@gmail.com"
-                className="px-7 py-3 rounded-full text-sm font-semibold text-white bg-purple-700 hover:bg-purple-800 transition-all"
+                className="px-6 py-2.5 rounded-full text-[13px] font-semibold text-white bg-purple-700 hover:bg-purple-600 transition-colors"
               >
                 Enviar email
               </a>
@@ -304,19 +293,19 @@ export default function Home() {
                 href="https://github.com/RafaDev29"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-7 py-3 rounded-full text-sm font-semibold text-purple-300 border border-purple-600/50 hover:border-purple-400 hover:text-purple-100 transition-all"
+                className="px-6 py-2.5 rounded-full text-[13px] font-semibold text-purple-300 border border-purple-700/50 hover:border-purple-500 hover:text-purple-100 transition-colors"
               >
                 GitHub
               </a>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="py-8 px-6 border-t border-purple-800/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-purple-500/40 text-xs">
+      <footer className="py-7 px-6 md:px-10 border-t border-purple-900/25 flex flex-col sm:flex-row items-center justify-between gap-3 text-purple-600/35 text-[12px]">
         <div className="flex items-center gap-2">
-          <CatLogo size={22} />
+          <CatLogo size={20} />
           <span>rafadev29 © 2025</span>
         </div>
         <span className="font-mono">Built with Next.js &amp; amor por NestJS</span>

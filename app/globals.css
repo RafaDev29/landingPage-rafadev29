@@ -40,3 +40,18 @@ body {
   animation: eye-blink 9s ease-in-out infinite;
   transform-origin: center;
 }
+
+/* Title chars hidden until GSAP animates them — prevents SSR flash */
+.title-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(48px);
+}
+
+/* Gradient heading — defined as a class to avoid React 19 shorthand conflict warning */
+.hero-title {
+  background-image: linear-gradient(to bottom, #ede9fe 10%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
