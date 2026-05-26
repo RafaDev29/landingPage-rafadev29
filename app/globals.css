@@ -13,41 +13,30 @@ body {
   font-family: var(--font-geist-sans), Arial, sans-serif;
 }
 
-@keyframes cat-float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-18px); }
+/* Hero cat: very subtle breathing — professional, not playful */
+@keyframes cat-breathe {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 10px rgba(109, 40, 217, 0.35));
+  }
+  50% {
+    transform: scale(1.018);
+    filter: drop-shadow(0 0 22px rgba(139, 92, 246, 0.55));
+  }
 }
 
-@keyframes cat-glow {
-  0%, 100% { filter: drop-shadow(0 0 14px rgba(139, 92, 246, 0.6)); }
-  50% { filter: drop-shadow(0 0 32px rgba(168, 85, 247, 1)); }
+/* Eye blink — subtle, slow */
+@keyframes eye-blink {
+  0%, 88%, 100% { transform: scaleY(1); }
+  93% { transform: scaleY(0.06); }
 }
 
-@keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(36px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes blink {
-  0%, 90%, 100% { transform: scaleY(1); }
-  95% { transform: scaleY(0.1); }
-}
-
-.cat-float {
-  animation: cat-float 4.5s ease-in-out infinite, cat-glow 3s ease-in-out infinite;
+.cat-breathe {
+  animation: cat-breathe 7s ease-in-out infinite;
+  will-change: transform, filter;
 }
 
 .cat-eye {
-  animation: blink 5s ease-in-out infinite;
+  animation: eye-blink 9s ease-in-out infinite;
   transform-origin: center;
 }
-
-.fade-in-up {
-  opacity: 0;
-  animation: fade-in-up 0.7s ease-out forwards;
-}
-
-.fade-delay-1 { animation-delay: 0.15s; }
-.fade-delay-2 { animation-delay: 0.3s; }
-.fade-delay-3 { animation-delay: 0.45s; }
-.fade-delay-4 { animation-delay: 0.6s; }
