@@ -138,7 +138,8 @@ const techStack: TechGroup[] = [
 ───────────────────────────────────────────── */
 export default function Home() {
   return (
-    <div className="min-h-screen" style={{ background: "#070711" }}>
+    <div className="relative z-10 min-h-screen"
+         style={{ background: "transparent" }}>
 
       <Header />
 

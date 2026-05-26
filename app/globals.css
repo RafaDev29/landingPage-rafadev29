@@ -41,15 +41,21 @@ body {
   transform-origin: center;
 }
 
-/* Title chars hidden until GSAP animates them — prevents SSR flash */
+@keyframes char-rise {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Title chars — pure CSS animation + per-char gradient text */
 .title-char {
   display: inline-block;
   opacity: 0;
-  transform: translateY(48px);
-}
-
-/* Gradient heading — defined as a class to avoid React 19 shorthand conflict warning */
-.hero-title {
+  animation: char-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   background-image: linear-gradient(to bottom, #ede9fe 10%, #8b5cf6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

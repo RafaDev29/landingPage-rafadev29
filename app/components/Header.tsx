@@ -2,38 +2,26 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
-/* 3 triangles — cat claw / ear mark. No face, no whiskers, just geometry. */
-function TriMark() {
+/* Cat ear mark — two proper ears with inner highlight. Clean, brand-level. */
+function CatEarMark() {
   return (
     <svg
-      width="28"
-      height="20"
-      viewBox="0 0 34 22"
+      width="30"
+      height="22"
+      viewBox="0 0 44 30"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden
-      className="tri-mark overflow-visible"
+      className="ear-mark overflow-visible"
     >
-      {/* Left — slightly shorter, recedes */}
-      <polygon
-        id="tri-l"
-        points="0,22 5.5,5 11,22"
-        fill="#8b5cf6"
-        fillOpacity="0.65"
-      />
-      {/* Center — tallest, dominant */}
-      <polygon
-        id="tri-c"
-        points="11.5,22 17,0 22.5,22"
-        fill="#a855f7"
-      />
-      {/* Right — mirror of left */}
-      <polygon
-        id="tri-r"
-        points="23,22 28.5,5 34,22"
-        fill="#8b5cf6"
-        fillOpacity="0.65"
-      />
+      {/* Left ear — outer */}
+      <polygon id="ear-l" points="1,30 11,1 22,28" fill="#7c3aed" />
+      {/* Left ear — inner highlight */}
+      <polygon points="5,27 11,7 17,26" fill="#c084fc" fillOpacity="0.45" />
+      {/* Right ear — outer */}
+      <polygon id="ear-r" points="22,28 33,1 43,30" fill="#7c3aed" />
+      {/* Right ear — inner highlight */}
+      <polygon points="27,26 33,7 39,27" fill="#c084fc" fillOpacity="0.45" />
     </svg>
   );
 }
@@ -50,9 +38,9 @@ export default function Header() {
 
       /* Claws grow up from the base — like a cat extending its nails */
       tl.fromTo(
-        ["#tri-l", "#tri-c", "#tri-r"],
+        ["#ear-l", "#ear-r"],
         { scaleY: 0, transformOrigin: "bottom center" },
-        { scaleY: 1, stagger: 0.09, duration: 0.48 }
+        { scaleY: 1, stagger: 0.1, duration: 0.48 }
       )
         /* Brand name clips in left → right */
         .fromTo(
@@ -81,7 +69,7 @@ export default function Header() {
     >
       {/* Logo — mark + wordmark */}
       <a href="#hero" className="flex items-end gap-3 select-none" aria-label="Home">
-        <TriMark />
+        <CatEarMark />
         <span
           className="brand-name font-bold text-[15px] tracking-widest text-purple-100/90 uppercase"
           style={{ letterSpacing: "0.18em" }}

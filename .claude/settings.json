@@ -8,7 +8,17 @@
       "Read(//tmp/**)",
       "Read(//private/tmp/**)",
       "Bash(python3 -c ' *)",
-      "Bash(pnpm add *)"
+      "Bash(pnpm add *)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(npx playwright *)",
+      "Bash(node -e ' *)",
+      "Bash(kill 30266)",
+      "Bash(pnpm dev > /tmp/nextjs-fresh.log 2>&1 & *)",
+      "Bash(kill 32849)",
+      "Bash(kill 32832)"
+    ],
+    "additionalDirectories": [
+      "/tmp"
     ]
   }
 }
